@@ -17,8 +17,9 @@ list_items = tree.findall("/body/ul/li")
 # xpath testing
 list_elements = tree.xpath("//li")
 for li in list_elements:
-    text = li.xpath("//text()")
-    print(text)
+    # need to use dot before // (e.g. './/...'), otherwise duplicate will be generated
+    text = map(str.strip, li.xpath(".//text()"))
+    print(list(text))
 
 
 
