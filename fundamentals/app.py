@@ -11,15 +11,25 @@
 from lxml import etree
 
 tree = etree.parse("fundamentals/src/web_page.html")
+html = tree.getroot()
+
+title_elements = html.cssselect("title")[0]
+print(title_elements.text)
+
+first_paragraph = html.cssselect("p")[0]
+print(first_paragraph.text)
 
 list_items = tree.findall("/body/ul/li")
 
 # xpath testing
-list_elements = tree.xpath("//li")
+list_elements = html.cssselect("li")
 for li in list_elements:
     # need to use dot before // (e.g. './/...'), otherwise duplicate will be generated
-    text = map(str.strip, li.xpath(".//text()"))
-    print(list(text))
+    a = li.cssselect('a')
+    if len(a) == 0:
+        print(li.text)
+    else: 
+        print(f"{li.text.strip()} {a[0].text}")
 
 
 
